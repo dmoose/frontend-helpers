@@ -1,11 +1,9 @@
 source "http://rubygems.org"
 
 # Rails so we can extend it
-gem "rails", "~> 3.2.0"
+gem "rails", "~> 3.2.1"
 
 gem "haml"
-
-gem "sprockets"
 
 if RUBY_VERSION < "1.9"
   gem "ruby-debug", ">= 0.10.3"
