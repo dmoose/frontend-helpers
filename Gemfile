@@ -3,8 +3,7 @@ source "http://rubygems.org"
 # Rails so we can extend it
 gem "rails", "~> 3.2.0"
 
-gem "haml-rails"
-gem "sass-rails"
+gem "haml"
 
 gem "sprockets"
 
