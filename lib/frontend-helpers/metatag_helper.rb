@@ -40,11 +40,12 @@ module FrontendHelpers
         :distribution => @meta_distribution,
         :robots => @robots,
         :"fb:app_id" => @meta_fb_app_id,
+        :"fb:admins" => @meta_fb_admins,
         :"og:title" => @meta_og_title,
         :"og:description" => @meta_og_description,
         :"og:url" => request.url,
         :"og:site_name" => @meta_og_site_name,
-        :"og:type" => @meta_og_type,
+        :"og:type" => @meta_og_type,  # website, blog, article
         :"og:image" => @meta_og_image,
         :"og:locality" => @meta_og_locality,
         :"og:region" => @meta_og_region,
