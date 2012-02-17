@@ -23,7 +23,6 @@ module FrontendHelpers
 
     def meta(buffer, name, options)
       if !name.blank? && !setting(name).blank? || options.include?(name) && options[name]
-        options[:title] = ( !options[name].blank? ) ? "#{options[name]} #{setting(:title)}" : ""
         buffer << "<meta content='#{options[name] ? options[name] : setting(name)}' name='#{name.to_s}' />"
       end
     end
