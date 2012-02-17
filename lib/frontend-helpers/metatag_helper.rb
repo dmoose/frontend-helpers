@@ -3,9 +3,11 @@ module FrontendHelpers
 
     def meta_tags
       options = opts
+      buffer = ''
       settings[:site].each do |s, k|
-        meta(s, options)
+        meta(buffer, s, options)
       end
+      buffer
     end
 
   private ##########
@@ -18,11 +20,11 @@ module FrontendHelpers
       ENV["SITE_#{setting.to_s.upcase}"] || settings[:site][setting]
     end
 
-    def meta(name, options)
+    def meta(buffer, name, options)
       if !name.blank? && !setting(name).blank? || options.include?(name) && options[name]
         options[:title] = ( !options[name].blank? ) ? "#{options[name]} #{setting(:title)}" : ""
         desc = (options.include?(name)) ? options[name] : setting(name)
-        haml_concat raw "<meta content='#{setting(name)}' name='#{name.to_s}' />"
+        buffer << "<meta content='#{setting(name)}' name='#{name.to_s}' />"
       end
     end
 
