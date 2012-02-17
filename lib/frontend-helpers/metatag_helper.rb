@@ -4,7 +4,8 @@ module FrontendHelpers
     def meta_tags
       options = opts
       buffer = ''
-      settings[:site].each do |s, k|
+      settings
+      @settings[:site].each do |s, k|
         meta(buffer, s, options)
       end
       buffer
@@ -13,18 +14,17 @@ module FrontendHelpers
   private ##########
 
     def settings
-      YAML.load_file(File.join(Rails.root, 'config', 'settings.yml')) rescue {}
+      @settings ||= YAML.load_file(File.join(Rails.root, 'config', 'settings.yml')) rescue {}
     end
 
     def setting(setting)
-      ENV["SITE_#{setting.to_s.upcase}"] || settings[:site][setting]
+      ENV["SITE_#{setting.to_s.upcase}"] || @settings[:site][setting]
     end
 
     def meta(buffer, name, options)
       if !name.blank? && !setting(name).blank? || options.include?(name) && options[name]
         options[:title] = ( !options[name].blank? ) ? "#{options[name]} #{setting(:title)}" : ""
-        desc = (options.include?(name)) ? options[name] : setting(name)
-        buffer << "<meta content='#{setting(name)}' name='#{name.to_s}' />"
+        buffer << "<meta content='#{options[name] ? options[name] : setting(name)}' name='#{name.to_s}' />"
       end
     end
 
@@ -45,7 +45,7 @@ module FrontendHelpers
         :"fb:admins" => @meta_fb_admins,
         :"og:title" => @meta_og_title,
         :"og:description" => @meta_og_description,
-        :"og:url" => request.url,
+        :"og:url" => request.url.gsub(/([^:])\/\//, '\1/'), # remove double slash since bug in rails with engines mounted at root
         :"og:site_name" => @meta_og_site_name,
         :"og:type" => @meta_og_type,  # website, blog, article
         :"og:image" => @meta_og_image,
