@@ -23,7 +23,9 @@ module FrontendHelpers
 
     def meta(buffer, name, options)
       if !name.blank? && !setting(name).blank? || options.include?(name) && options[name]
-        buffer << "<meta content='#{options[name] ? options[name] : setting(name)}' name='#{name.to_s}' />"
+        content = options[name] ? options[name] : setting(name)
+        content.gsub!(/['"]/,'') # remove quotes so they don't screw up html
+        buffer << "<meta content='#{content}' name='#{name.to_s}' />"
       end
     end
 
